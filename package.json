@@ -1,6 +1,6 @@
 {
     "name": "@utils/utils-dom",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "typings": "dts/index.d.ts",
     "description": "dom常用工具",
     "main": "lib/index.js",
@@ -10,11 +10,15 @@
     "files": [
         "es",
         "lib",
-        "dts"
+        "dts",
+        "src"
     ],
     "author": {
         "name": "XueYou",
         "email": "xueyoucd@gmail.com"
+    },
+    "publishConfig": {
+        "registry": "http://m.bank-pay.com:8081/repository/npm-my/"
     },
     "scripts": {
         "type-check": "tsc --noEmit",
@@ -23,7 +27,8 @@
         "bundle": "rollup -c",
         "build": "yarn run build:types && yarn run build:js",
         "build:types": "tsc --emitDeclarationOnly",
-        "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps"
+        "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps",
+        "_publish": "yarn run test && yarn run bundle && yarn run build:types && npm publish"
     },
     "devDependencies": {
         "@babel/cli": "^7.2.3",
