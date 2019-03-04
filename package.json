@@ -1,0 +1,38 @@
+{
+    "name": "@utils/utils-dom",
+    "version": "0.0.1",
+    "typings": "dts/index.d.ts",
+    "description": "dom常用工具",
+    "main": "lib/index.js",
+    "module": "es/index",
+    "publisher": "XueYou",
+    "license": "MIT",
+    "files": [
+        "es",
+        "lib",
+        "dts"
+    ],
+    "author": {
+        "name": "XueYou",
+        "email": "xueyoucd@gmail.com"
+    },
+    "scripts": {
+        "type-check": "tsc --noEmit",
+        "type-check:watch": "yarn run type-check -- --watch",
+        "bundle": "rollup -c",
+        "build": "yarn run build:types && yarn run build:js",
+        "build:types": "tsc --emitDeclarationOnly",
+        "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.2.3",
+        "@babel/core": "^7.3.4",
+        "@babel/preset-env": "^7.3.4",
+        "@babel/preset-typescript": "^7.3.3",
+        "rollup": "^1.4.0",
+        "rollup-plugin-babel": "^4.3.2",
+        "rollup-plugin-commonjs": "^9.2.1",
+        "rollup-plugin-node-resolve": "^4.0.1",
+        "typescript": "^3.3.3333"
+    }
+}
