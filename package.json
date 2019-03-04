@@ -1,6 +1,6 @@
 {
     "name": "@utils/utils-dom",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "typings": "dts/index.d.ts",
     "description": "dom常用工具",
     "main": "lib/index.js",
@@ -17,8 +17,12 @@
         "name": "XueYou",
         "email": "xueyoucd@gmail.com"
     },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/xueyou2000/dom-utils.git"
+    },
     "publishConfig": {
-        "registry": "http://m.bank-pay.com:8081/repository/npm-my/"
+        "registry": "http://192.168.1.22:8081/repository/npm-my/"
     },
     "scripts": {
         "type-check": "tsc --noEmit",
