@@ -1,6 +1,6 @@
 {
     "name": "@utils/utils-dom",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "typings": "dts/index.d.ts",
     "description": "dom常用工具",
     "main": "lib/index.js",
@@ -10,8 +10,7 @@
     "files": [
         "es",
         "lib",
-        "dts",
-        "src"
+        "dts"
     ],
     "author": {
         "name": "XueYou",
@@ -26,27 +25,21 @@
     },
     "scripts": {
         "type-check": "tsc --noEmit",
-        "type-check:watch": "yarn run type-check -- --watch",
         "test": "jest",
         "bundle": "rollup -c",
-        "build": "yarn run build:types && yarn run build:js",
         "build:types": "tsc --emitDeclarationOnly",
-        "build:js": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps",
         "_publish": "yarn run test && yarn run bundle && yarn run build:types && npm publish"
     },
     "devDependencies": {
-        "@babel/cli": "^7.2.3",
-        "@babel/core": "^7.3.4",
-        "@babel/preset-env": "^7.3.4",
-        "@babel/preset-typescript": "^7.3.3",
         "@types/jest": "^24.0.9",
         "dom-testing-library": "^3.16.8",
         "jest": "^24.1.0",
         "rollup": "^1.4.0",
-        "rollup-plugin-babel": "^4.3.2",
         "rollup-plugin-commonjs": "^9.2.1",
         "rollup-plugin-node-resolve": "^4.0.1",
+        "rollup-plugin-typescript": "^1.0.0",
         "ts-jest": "^24.0.0",
+        "tslib": "^1.9.3",
         "typescript": "^3.3.3333"
     }
 }
