@@ -30,5 +30,6 @@ export function loadImage(url: string) {
  * @param base64 图片base64数据
  */
 export function loadImageBase64(base64: string) {
-    return ImageFactory(`data:image/png;base64,${base64}`);
+    const flag = "data:image/jpeg;base64,";
+    return ImageFactory(base64.indexOf(flag) === 0 ? base64 : `${flag}${base64}`);
 }

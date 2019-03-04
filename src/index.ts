@@ -1,3 +1,1 @@
-import * as ImageUtils from "./Image";
-
-export default ImageUtils;
+export * from "./Image";
