@@ -2,13 +2,14 @@
     "compilerOptions": {
         "baseUrl": ".",
         "outDir": "dts",
-        "module": "es6",
+        "module": "esnext",
+        "target": "esnext",
         "moduleResolution": "node",
-        "target": "es6",
+        "skipLibCheck": true,
         "sourceMap": true,
         "declaration": true,
         "esModuleInterop": true,
-        "lib": ["es6", "dom"],
+        "lib": ["esnext", "dom"],
         "paths": {
             "@/*": ["src/*"]
         }

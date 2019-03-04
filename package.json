@@ -28,6 +28,7 @@
         "test": "jest",
         "bundle": "rollup -c",
         "build:types": "tsc --emitDeclarationOnly",
+        "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls",
         "_publish": "yarn run test && yarn run bundle && yarn run build:types && npm publish"
     },
     "devDependencies": {
