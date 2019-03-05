@@ -1,4 +1,3 @@
-# @utils/utils-dom
+# utils-dom
 
 > `dom`工具
-
