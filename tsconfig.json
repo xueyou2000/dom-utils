@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
-        "outDir": "dts",
+        "baseUrl": "./",
+        "outDir": "es",
         "module": "esnext",
         "target": "esnext",
         "moduleResolution": "node",
