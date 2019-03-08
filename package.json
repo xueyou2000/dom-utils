@@ -2,7 +2,7 @@
     "name": "utils-dom",
     "version": "0.0.41",
     "description": "dom常用工具函数",
-    "typings": "typings/index.d.ts",
+    "typings": "es/index.d.ts",
     "main": "dist/index.js",
     "module": "es/index.js",
     "publisher": "XueYou",
