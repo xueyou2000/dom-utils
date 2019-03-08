@@ -5,6 +5,7 @@ node_modules/
 /dts/
 /es/
 /lib/
+/typings/
 /release/
 /static/
 /.rpt2_cache/

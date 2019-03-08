@@ -1,20 +1,17 @@
 {
     "name": "utils-dom",
-    "version": "0.0.4",
-    "description": "dom常用工具",
-    "typings": "es/index.d.ts",
-    "main": "dist/index.lib.js",
+    "version": "0.0.41",
+    "description": "dom常用工具函数",
+    "typings": "typings/index.d.ts",
+    "main": "dist/index.js",
     "module": "es/index.js",
     "publisher": "XueYou",
     "license": "MIT",
     "files": [
         "es",
-        "dist"
+        "dist",
+        "typings"
     ],
-    "author": {
-        "name": "XueYou",
-        "email": "xueyoucd@gmail.com"
-    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/xueyou2000/dom-utils.git"
@@ -22,12 +19,16 @@
     "publishConfig": {
         "registry": "http://192.168.1.22:8081/repository/npm-my/"
     },
+    "author": {
+        "name": "XueYou",
+        "email": "xueyoucd@gmail.com"
+    },
     "scripts": {
         "test": "jest",
         "coverage": "jest --coverage",
-        "build": "tsc && yarn run build:es && yarn run build:lib",
-        "build:es": "rollup --config rollup.config.es.js",
-        "build:lib": "rollup --config rollup.config.lib.js",
+        "build": "yarn run build:es && yarn run bundle",
+        "build:es": "tsc",
+        "bundle": "rollup -c",
         "_publish": "yarn run test && yarn run build && npm publish"
     },
     "devDependencies": {

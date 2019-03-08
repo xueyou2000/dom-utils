@@ -2,12 +2,13 @@
     "compilerOptions": {
         "baseUrl": "./",
         "outDir": "es",
+        "target": "es6",
         "module": "esnext",
-        "target": "esnext",
-        "moduleResolution": "node",
-        "skipLibCheck": true,
-        "sourceMap": true,
         "declaration": true,
+        "skipLibCheck": true,
+        "strict": false,
+        "moduleResolution": "node",
+        "sourceMap": true,
         "esModuleInterop": true,
         "lib": ["esnext", "dom"],
         "paths": {
