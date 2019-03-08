@@ -5,15 +5,17 @@
         "target": "es6",
         "module": "esnext",
         "declaration": true,
+        "declarationDir": "typings",
         "skipLibCheck": true,
         "strict": false,
         "moduleResolution": "node",
         "sourceMap": true,
-        "esModuleInterop": true,
         "lib": ["esnext", "dom"],
         "paths": {
             "@/*": ["src/*"]
-        }
+        },
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true
     },
     "include": ["./src/*"]
 }
