@@ -16,9 +16,6 @@
         "type": "git",
         "url": "git+https://github.com/xueyou2000/dom-utils.git"
     },
-    "publishConfig": {
-        "registry": "http://192.168.1.22:8081/repository/npm-my/"
-    },
     "author": {
         "name": "XueYou",
         "email": "xueyoucd@gmail.com"
