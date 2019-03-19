@@ -1,9 +1,9 @@
 {
     "name": "utils-dom",
-    "version": "0.0.41",
+    "version": "0.0.42",
     "description": "dom常用工具函数",
     "typings": "es/index.d.ts",
-    "main": "dist/index.js",
+    "main": "es/index.js",
     "module": "es/index.js",
     "publisher": "XueYou",
     "license": "MIT",
