@@ -1,5 +1,15 @@
 # Change Log
 
+## 0.0.44 (Fri Mar 22 2019)
+
+-   增加`alignElement`
+
+## 0.0.43 (Wed Mar 20 2019)
+
+-   增加`getDocument`方法
+-   增加`getViewport`方法
+-   增加`isWindow`方法
+
 ## 0.0.42 (March 8, 2019)
 
 -   更改输出目标`esnext`为`es5`
