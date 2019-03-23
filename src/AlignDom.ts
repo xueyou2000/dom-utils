@@ -140,6 +140,8 @@ function accPoint(p1: Point, p2: Point) {
  */
 export function alignElement(sourceNode: HTMLElement, targetNode: HTMLElement | AlignPointType, option: IDomAlignOption) {
     const { points } = option;
+    var flipX = false,
+        flipY = false;
     const sourceRegion = getRegion(sourceNode);
     const targetRegion = getRegion(targetNode, true);
     const targetPoint = calcPoint(targetRegion, points[1]);
@@ -160,8 +162,6 @@ export function alignElement(sourceNode: HTMLElement, targetNode: HTMLElement | 
 
     // 判断对齐点是否还有空间, 否则flip翻转方向去对齐
     if (option.overflow) {
-        let flipX = false;
-        let flipY = false;
         const [viewportWidth, viewportHeight] = getViewportSize();
 
         if (option.overflow.adjustX) {
@@ -195,6 +195,8 @@ export function alignElement(sourceNode: HTMLElement, targetNode: HTMLElement | 
     sourceNode.style.position = "absolute";
     sourceNode.style.left = `${alignPoint.x}px`;
     sourceNode.style.top = `${alignPoint.y}px`;
+
+    return { flipX, flipY };
 }
 
 export const PointMap: { [key: string]: [PointSuite, PointSuite] } = {

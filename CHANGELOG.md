@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.49 (Sat Mar 23 2019)
+
+-   AlignDom 返回是否翻转信息
+
 ## 0.0.47 (Sat Mar 23 2019)
 
 -   增加`PointMap`对齐点映射
