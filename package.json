@@ -1,6 +1,6 @@
 {
     "name": "utils-dom",
-    "version": "0.0.44",
+    "version": "0.0.45",
     "description": "dom常用工具函数",
     "typings": "es/index.d.ts",
     "main": "es/index.js",
@@ -32,6 +32,9 @@
         "@types/jest": "^24.0.9",
         "dom-testing-library": "^3.16.8",
         "jest": "^24.1.0",
+        "react": "^16.8.5",
+        "react-dom": "^16.8.5",
+        "react-testing-library": "^6.0.2",
         "rollup": "^1.4.0",
         "rollup-plugin-commonjs": "^9.2.1",
         "rollup-plugin-node-resolve": "^4.0.1",

@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.45 (Sat Mar 23 2019)
+
+-   增加`ListenEvent`
+
 ## 0.0.44 (Fri Mar 22 2019)
 
 -   增加`alignElement`
