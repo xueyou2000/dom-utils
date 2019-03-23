@@ -196,3 +196,14 @@ export function alignElement(sourceNode: HTMLElement, targetNode: HTMLElement | 
     sourceNode.style.left = `${alignPoint.x}px`;
     sourceNode.style.top = `${alignPoint.y}px`;
 }
+
+export const PointMap: { [key: string]: [PointSuite, PointSuite] } = {
+    top: ["bc", "tc"],
+    left: ["cr", "cl"],
+    right: ["cl", "cr"],
+    bottom: ["tc", "bc"],
+    topLeft: ["bl", "tl"],
+    topRight: ["br", "tr"],
+    bottomLeft: ["tl", "bl"],
+    bottomRight: ["tr", "br"]
+};

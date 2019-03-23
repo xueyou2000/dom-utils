@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.47 (Sat Mar 23 2019)
+
+-   增加`PointMap`对齐点映射
+
 ## 0.0.46 (Sat Mar 23 2019)
 
 -   更新`listenClick`签名
