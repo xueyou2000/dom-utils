@@ -9,7 +9,7 @@ describe("ListenEvent", () => {
         const div = document.createElement("div");
         document.body.append(div);
 
-        const cancel = listenClick(div, fn, false);
+        const cancel = listenClick(div, fn, () => false);
 
         fireEvent.click(div);
 

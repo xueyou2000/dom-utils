@@ -26,9 +26,13 @@ export function listenHover(element: HTMLElement, cb: (hovered: boolean, event: 
  * @param element
  * @param cb
  */
-export function listenClick(element: HTMLElement, cb: (clicked: boolean, event: MouseEvent) => void, prevState?: boolean) {
+export function listenClick(element: HTMLElement, cb: (clicked: boolean, event: MouseEvent) => void, getPrevState?: () => boolean) {
     const onMouseClick = (event: MouseEvent) => {
-        cb(!prevState, event);
+        if (getPrevState) {
+            cb(!getPrevState(), event);
+        } else {
+            cb(true, event);
+        }
     };
     element.addEventListener("click", onMouseClick);
 
