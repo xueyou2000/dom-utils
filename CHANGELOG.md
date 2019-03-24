@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.50 (Sun Mar 24 2019)
+
+-   修复 AlignDom 对齐逻辑
+
 ## 0.0.49 (Sat Mar 23 2019)
 
 -   AlignDom 返回是否翻转信息

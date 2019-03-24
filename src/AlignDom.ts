@@ -142,6 +142,9 @@ export function alignElement(sourceNode: HTMLElement, targetNode: HTMLElement | 
     const { points } = option;
     var flipX = false,
         flipY = false;
+
+    sourceNode.style.display = "block";
+
     const sourceRegion = getRegion(sourceNode);
     const targetRegion = getRegion(targetNode, true);
     const targetPoint = calcPoint(targetRegion, points[1]);
@@ -162,40 +165,71 @@ export function alignElement(sourceNode: HTMLElement, targetNode: HTMLElement | 
 
     // 判断对齐点是否还有空间, 否则flip翻转方向去对齐
     if (option.overflow) {
-        const [viewportWidth, viewportHeight] = getViewportSize();
+        let [viewportWidth, viewportHeight] = getViewportSize();
+        viewportWidth += window.pageXOffset;
+        viewportHeight += window.pageYOffset;
 
         if (option.overflow.adjustX) {
+            const rightOffsetX = viewportWidth - (alignPoint.x + sourceRegion.width);
             if (alignPoint.x < 0) {
                 // 左边界溢出
-                alignPoint.x = targetRegion.left + targetRegion.width;
-                flipX = true;
-            } else if (alignPoint.x + sourceRegion.width > viewportWidth) {
+
+                // 溢出的距离超过 targetRegion.width的一半, 则反转
+                if (Math.abs(alignPoint.x) <= sourceRegion.width / 2) {
+                    alignPoint.x = 0;
+                } else {
+                    // 反转
+                    alignPoint.x = targetRegion.left + targetRegion.width;
+                    flipX = true;
+                }
+            } else if (rightOffsetX < 0) {
                 // 右边界溢出
-                alignPoint.x = targetRegion.left - sourceRegion.width;
-                flipX = true;
+
+                // 溢出的距离超过 targetRegion.width的一半, 则反转
+                if (Math.abs(rightOffsetX) <= sourceRegion.width / 2) {
+                    alignPoint.x = alignPoint.x + rightOffsetX;
+                } else {
+                    // 反转
+                    alignPoint.x = targetRegion.left - sourceRegion.width;
+                    flipX = true;
+                }
             }
         }
-
         if (option.overflow.adjustY) {
+            const bottomOffsetY = viewportHeight - (alignPoint.y + sourceRegion.height);
+
             if (alignPoint.y < 0) {
                 // 上边界溢出
-                alignPoint.y = targetRegion.top + targetRegion.height;
-                flipY = true;
-            } else if (alignPoint.y + sourceRegion.height > viewportHeight) {
+
+                // 溢出的距离超过 targetRegion.height的一半, 则反转
+                if (Math.abs(alignPoint.y) <= sourceRegion.height / 2) {
+                    alignPoint.y = 0;
+                } else {
+                    // 反转
+                    alignPoint.y = targetRegion.top + targetRegion.height;
+                    flipY = true;
+                }
+            } else if (bottomOffsetY < 0) {
                 // 下边界溢出
-                alignPoint.y = targetRegion.top - sourceRegion.height;
-                flipY = true;
+
+                // 溢出的距离超过 targetRegion.height的一半, 则反转
+                if (Math.abs(bottomOffsetY) <= sourceRegion.height / 2) {
+                    alignPoint.y = alignPoint.y + bottomOffsetY;
+                } else {
+                    // 反转
+                    alignPoint.y = targetRegion.top - sourceRegion.height;
+                    flipY = true;
+                }
             }
         }
 
         // 只有x轴反转就只再次累加x轴的偏移量, 某则就重复累加了, Y轴也如此
         alignPoint = accOffset(alignPoint, flipX, flipY);
     }
-
     sourceNode.style.position = "absolute";
     sourceNode.style.left = `${alignPoint.x}px`;
     sourceNode.style.top = `${alignPoint.y}px`;
-
+    sourceNode.style.display = null;
     return { flipX, flipY };
 }
 
