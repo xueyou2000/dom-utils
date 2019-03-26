@@ -156,7 +156,7 @@ export function alignElement(sourceNode: HTMLElement, targetNode: HTMLElement | 
         // 累加上Source偏移量
         p = alignPoint = accPoint(point, calcOffset(sourceRegion, option.offset, allowX, allowY));
         // 累加Target偏移量
-        p = alignPoint = accPoint(point, calcOffset(targetRegion, option.targetOffset, allowX, allowY));
+        p = alignPoint = accPoint(p, calcOffset(targetRegion, option.targetOffset, allowX, allowY));
 
         return p;
     }
@@ -224,7 +224,7 @@ export function alignElement(sourceNode: HTMLElement, targetNode: HTMLElement | 
         }
 
         // 只有x轴反转就只再次累加x轴的偏移量, 某则就重复累加了, Y轴也如此
-        alignPoint = accOffset(alignPoint, flipX, flipY);
+        alignPoint = accOffset(alignPoint, !flipX, !flipY);
     }
     sourceNode.style.position = "absolute";
     sourceNode.style.left = `${alignPoint.x}px`;
