@@ -1,6 +1,6 @@
 # Change Log
 
-## 0.0.51 ()
+## 0.0.51 (Tue Mar 26 2019)
 
 -   修复`AlignDom`累加 offset 的判断失误
 
