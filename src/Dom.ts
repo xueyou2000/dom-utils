@@ -39,3 +39,16 @@ export function getViewportSize(): number[] {
 export function isWindow(obj: any) {
     return obj !== null && obj !== undefined && obj == obj.window;
 }
+
+/**
+ * 定位元素
+ * @description 将元素定位到wrap可视区域中
+ * @param wrap 含有溢出滚动条的容器
+ * @param element 元素
+ */
+export function locateElement(wrap: HTMLElement, element: HTMLElement) {
+    if (!wrap || !element) {
+        return;
+    }
+    wrap.scrollTop = element.offsetTop - wrap.clientHeight / 2;
+}

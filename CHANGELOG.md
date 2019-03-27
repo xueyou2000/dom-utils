@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.52 (Sun Mar 24 2019)
+
+-   修复 AlignDom 累加偏移量的 BUG
+
 ## 0.0.51 (Tue Mar 26 2019)
 
 -   修复`AlignDom`累加 offset 的判断失误

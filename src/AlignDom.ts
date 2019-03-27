@@ -223,8 +223,8 @@ export function alignElement(sourceNode: HTMLElement, targetNode: HTMLElement | 
             }
         }
 
-        // 只有x轴反转就只再次累加x轴的偏移量, 某则就重复累加了, Y轴也如此
-        alignPoint = accOffset(alignPoint, !flipX, !flipY);
+        // 只有x轴反转就只再次累加x轴的偏移量, Y轴也如此
+        alignPoint = accOffset(alignPoint, flipX, flipY);
     }
     sourceNode.style.position = "absolute";
     sourceNode.style.left = `${alignPoint.x}px`;
