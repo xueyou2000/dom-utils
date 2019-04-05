@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.53 (Fri Apr 05 2019)
+
+-   增加`CreateNnavigateHandle`
+
 ## 0.0.52 (Sun Mar 24 2019)
 
 -   修复 AlignDom 累加偏移量的 BUG
