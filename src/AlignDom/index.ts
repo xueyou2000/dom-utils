@@ -1,6 +1,6 @@
 import { getDocumentSize, getViewportSize } from "../Dom";
 import { OverFlow, AlignPointType, PointSuite, Point, Region, Round, RevisePoint, DomAlignOption } from "./interface";
-import { getRegion, calcPoint, accPoint, calcOffset, clacOverFlowSize, adjustPoint, flipPoint, accRevisePoint, resizeSource } from "./utils";
+import { getRegion, calcPoint, accPoint, calcOffset, clacOverFlowSize, adjustPoint, flipPoint, accRevisePoint, resizeSource, flipOffset } from "./utils";
 
 /**
  * 元素对齐
@@ -21,15 +21,21 @@ export function alignElement(sourceNode: HTMLElement, targetNode: HTMLElement | 
     /**
      * 将对齐点叠加偏移量
      * @param point   对齐点
-     * @param allowX    允许x轴叠加
-     * @param allowY    允许x轴叠加
      */
-    function accOffset(point: Point, allowX = true, allowY = true) {
+    function accOffset(point: Point, allow: RevisePoint = { x: true, y: true }, flip = false) {
+        let { offset, targetOffset } = option;
+
+        // 反转后， 偏移量也要反转
+        if (flip) {
+            offset = flipOffset(offset);
+            targetOffset = flipOffset(targetOffset);
+        }
+
         var p: Point;
         // 累加上 Source 偏移量
-        p = accPoint(point, calcOffset(sourceRegion, option.offset, allowX, allowY));
+        p = accPoint(point, calcOffset(sourceRegion, offset, allow));
         // 累加 Target 偏移量
-        p = accPoint(p, calcOffset(targetRegion, option.targetOffset, allowX, allowY));
+        p = accPoint(p, calcOffset(targetRegion, targetOffset, allow));
         return p;
     }
 
@@ -41,16 +47,17 @@ export function alignElement(sourceNode: HTMLElement, targetNode: HTMLElement | 
     // 微调
     if (option.overflow.adjust) {
         needAccOffset = adjustPoint(finallyPoint, sourceRegion);
+        // 累加偏移量(微调或反转后，需要重新累加偏移量)
+        finallyPoint = accOffset(finallyPoint, needAccOffset);
     }
 
     // 反转
     if (option.overflow.flip) {
         const flipRevise = flipPoint(finallyPoint, sourceRegion, targetRegion);
         needAccOffset = accRevisePoint(needAccOffset, flipRevise);
+        // 累加偏移量(微调或反转后，需要重新累加偏移量)
+        finallyPoint = accOffset(finallyPoint, needAccOffset, true);
     }
-
-    // 累加偏移量(微调或反转后，需要重新累加偏移量)
-    finallyPoint = accOffset(finallyPoint, needAccOffset.x, needAccOffset.y);
 
     const region = resizeSource(finallyPoint, sourceRegion);
 

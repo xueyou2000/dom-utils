@@ -83,18 +83,39 @@ export function coverPercentage(ratio: string) {
  * @param allowX    允许x轴偏移
  * @param allowY    允许y轴偏移
  */
-export function calcOffset(region: Region, offset: number[] | string[], allowX = true, allowY = true): Point {
+export function calcOffset(region: Region, offset: number[] | string[], allow: RevisePoint = { x: true, y: true }): Point {
     const distance: Point = { x: 0, y: 0 };
     if (!offset) {
         return distance;
     }
-    if (allowX) {
+    if (allow.x) {
         distance.x = typeof offset[0] === "string" ? coverPercentage(offset[0] as string) * region.width : (offset[0] as number);
     }
-    if (allowY) {
+    if (allow.y) {
         distance.y = typeof offset[1] === "string" ? coverPercentage(offset[1] as string) * region.height : (offset[1] as number);
     }
     return distance;
+}
+
+/**
+ * 反转偏移量
+ * @param offset
+ */
+export function flipOffset(offset: any[]) {
+    if (!offset) {
+        return offset;
+    }
+    const result = [];
+
+    if (offset.length >= 1) {
+        result[0] = offset[0] === "string" ? `-${offset[0]}` : -offset[0];
+    }
+
+    if (offset.length >= 2) {
+        result[1] = offset[1] === "string" ? `-${offset[1]}` : -offset[1];
+    }
+
+    return result;
 }
 
 /**
@@ -194,7 +215,7 @@ export function flipPoint(point: Point, sourceRegion: Region, targetRegion: Regi
     }
 
     if (overflow.right > 0 && targetRegion.left - sourceRegion.width > 0) {
-        point.x = targetRegion.left;
+        point.x = targetRegion.left - sourceRegion.width;
         adjustX = true;
     }
 
@@ -204,7 +225,7 @@ export function flipPoint(point: Point, sourceRegion: Region, targetRegion: Regi
     }
 
     if (overflow.bottom > 0 && targetRegion.top - sourceRegion.height > 0) {
-        point.y = targetRegion.top;
+        point.y = targetRegion.top - sourceRegion.height;
         adjustY = true;
     }
 
