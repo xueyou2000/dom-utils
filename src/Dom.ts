@@ -33,6 +33,14 @@ export function getViewportSize(): number[] {
 }
 
 /**
+ * 获取文档大小
+ */
+export function getDocumentSize(): number[] {
+    let [viewportWidth, viewportHeight] = getViewportSize();
+    return [viewportWidth + window.pageXOffset, viewportHeight + window.pageYOffset];
+}
+
+/**
  * 判断元素是否是window
  * @param obj
  */
