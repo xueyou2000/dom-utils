@@ -34,7 +34,7 @@ export function alignElement(sourceNode: HTMLElement, targetNode: HTMLElement | 
  */
 export function alignRegion(sourceRegion: Region, targetRegion: Region, option: DomAlignOption) {
     const { points } = option;
-    const sourcePoint = calcPoint(sourceRegion, points[0]);
+    const sourcePoint = calcPoint({ left: 0, top: 0, width: sourceRegion.width, height: sourceRegion.height }, points[0]);
     const targetPoint = calcPoint(targetRegion, points[1]);
     const alignPoint: Point = { x: targetPoint.x - sourcePoint.x, y: targetPoint.y - sourcePoint.y };
 
@@ -63,17 +63,17 @@ export function alignRegion(sourceRegion: Region, targetRegion: Region, option: 
     let finallyPoint = accOffset(alignPoint);
 
     // 是否微调或者反转了
-    let needAccOffset: RevisePoint = { x: false, y: false };
+    let flipRevise: RevisePoint = { x: false, y: false };
     // 反转
     if (option.overflow.flip) {
-        const flipRevise = flipPoint(finallyPoint, sourceRegion, targetRegion);
-        needAccOffset = accRevisePoint(needAccOffset, flipRevise);
+        flipRevise = flipPoint(finallyPoint, sourceRegion, targetRegion);
         // 累加偏移量(微调或反转后，需要重新累加偏移量)
-        finallyPoint = accOffset(finallyPoint, needAccOffset, true);
+        finallyPoint = accOffset(finallyPoint, flipRevise, true);
     }
     // 微调
     if (option.overflow.adjust) {
-        needAccOffset = adjustPoint(finallyPoint, sourceRegion);
+        const needAccOffset = adjustPoint(finallyPoint, sourceRegion);
+        flipRevise = accRevisePoint(flipRevise, needAccOffset);
         // 累加偏移量(微调或反转后，需要重新累加偏移量)
         finallyPoint = accOffset(finallyPoint, needAccOffset);
     }

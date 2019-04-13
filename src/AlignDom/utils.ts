@@ -85,15 +85,15 @@ export function coverPercentage(ratio: string) {
  * @param allowY    允许y轴偏移
  */
 export function calcOffset(region: Region, offset: number[] | string[], allow: RevisePoint = { x: true, y: true }): Point {
-    const distance: Point = { x: region.left, y: region.top };
+    const distance: Point = { x: 0, y: 0 };
     if (!offset) {
         return distance;
     }
     if (allow.x) {
-        distance.x += typeof offset[0] === "string" ? coverPercentage(offset[0] as string) * region.width : (offset[0] as number);
+        distance.x = typeof offset[0] === "string" ? coverPercentage(offset[0] as string) * region.width : (offset[0] as number);
     }
     if (allow.y) {
-        distance.y += typeof offset[1] === "string" ? coverPercentage(offset[1] as string) * region.height : (offset[1] as number);
+        distance.y = typeof offset[1] === "string" ? coverPercentage(offset[1] as string) * region.height : (offset[1] as number);
     }
     return distance;
 }

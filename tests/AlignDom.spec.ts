@@ -81,33 +81,33 @@ describe("AlignDom - calcPoint", () => {
 describe("AlignDom - calcOffset", () => {
     test("calcOffset none", () => {
         const region: Region = { left: 10, top: 12, width: 100, height: 120 };
-        const point = calcOffset(region, null);
+        const offset = calcOffset(region, null);
 
-        expect(point).toEqual({ x: 10, y: 12 });
+        expect(offset).toEqual({ x: 0, y: 0 });
     });
 
     test("calcOffset wich number", () => {
         const region: Region = { left: 10, top: 12, width: 100, height: 120 };
-        const point = calcOffset(region, [10, 12]);
+        const offset = calcOffset(region, [10, 12]);
 
-        expect(point).toEqual({ x: 20, y: 24 });
+        expect(offset).toEqual({ x: 10, y: 12 });
     });
 
     test("calcOffset wich percentage", () => {
         const region: Region = { left: 10, top: 12, width: 100, height: 120 };
-        const point = calcOffset(region, ["10%", "12%"]);
+        const offset = calcOffset(region, ["10%", "12%"]);
 
-        expect(point).toEqual({ x: 10 + 100 * 0.1, y: 12 + 120 * 0.12 });
+        expect(offset).toEqual({ x: 100 * 0.1, y: 120 * 0.12 });
     });
 
     test("calcOffset wich allow", () => {
         const region: Region = { left: 10, top: 12, width: 100, height: 120 };
 
-        let point = calcOffset(region, [10, 12], { x: true, y: false });
-        expect(point).toEqual({ x: 20, y: 12 });
+        let offset = calcOffset(region, [10, 12], { x: true, y: false });
+        expect(offset).toEqual({ x: 10, y: 0 });
 
-        point = calcOffset(region, [10, 12], { x: false, y: true });
-        expect(point).toEqual({ x: 10, y: 24 });
+        offset = calcOffset(region, [10, 12], { x: false, y: true });
+        expect(offset).toEqual({ x: 0, y: 12 });
     });
 });
 
