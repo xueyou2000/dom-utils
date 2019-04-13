@@ -1,5 +1,5 @@
-import { OverFlow, AlignPointType, PointSuite, Point, Region, Round, DomAlignOption, RevisePoint } from "./interface";
 import { getDocumentSize } from "..";
+import { AlignPointType, Point, PointSuite, Region, RevisePoint, Round } from "./interface";
 
 /**
  * 获取区域
@@ -8,24 +8,25 @@ import { getDocumentSize } from "..";
  */
 export function getRegion(element: HTMLElement | AlignPointType, setDirection = false) {
     var region: Region = { left: 0, top: 0, width: 0, height: 0 };
-    let bound = { top: 0, left: 0, width: 0, height: 0 };
 
     if ("pageX" in element) {
-        bound.left = element.pageX;
-        bound.top = element.pageY;
+        region.left = element.pageX;
+        region.top = element.pageY;
     } else if ("clientX" in element) {
-        bound.left = element.clientX + window.pageXOffset;
-        bound.top = element.clientY + window.pageYOffset;
+        region.left = element.clientX + window.pageXOffset;
+        region.top = element.clientY + window.pageYOffset;
     } else {
         const bound = element.getBoundingClientRect();
+        region.left = bound.left;
+        region.top = bound.top;
         region.width = bound.width;
         region.height = bound.height;
+
         if (setDirection) {
-            region.top = bound.top + window.pageYOffset;
-            region.left += bound.left + window.pageXOffset;
+            region.left += window.pageXOffset;
+            region.top += window.pageYOffset;
         }
     }
-
     return region;
 }
 
@@ -84,17 +85,29 @@ export function coverPercentage(ratio: string) {
  * @param allowY    允许y轴偏移
  */
 export function calcOffset(region: Region, offset: number[] | string[], allow: RevisePoint = { x: true, y: true }): Point {
-    const distance: Point = { x: 0, y: 0 };
+    const distance: Point = { x: region.left, y: region.top };
     if (!offset) {
         return distance;
     }
     if (allow.x) {
-        distance.x = typeof offset[0] === "string" ? coverPercentage(offset[0] as string) * region.width : (offset[0] as number);
+        distance.x += typeof offset[0] === "string" ? coverPercentage(offset[0] as string) * region.width : (offset[0] as number);
     }
     if (allow.y) {
-        distance.y = typeof offset[1] === "string" ? coverPercentage(offset[1] as string) * region.height : (offset[1] as number);
+        distance.y += typeof offset[1] === "string" ? coverPercentage(offset[1] as string) * region.height : (offset[1] as number);
     }
     return distance;
+}
+
+/**
+ * 反转百分比字符串
+ * @param rate
+ */
+function reversePercentage(rate: string) {
+    if (rate.indexOf("-") !== -1) {
+        return rate.replace("-", "");
+    } else {
+        return "-" + rate;
+    }
 }
 
 /**
@@ -108,11 +121,11 @@ export function flipOffset(offset: any[]) {
     const result = [];
 
     if (offset.length >= 1) {
-        result[0] = offset[0] === "string" ? `-${offset[0]}` : -offset[0];
+        result[0] = typeof offset[0] === "string" ? reversePercentage(offset[0]) : -offset[0];
     }
 
     if (offset.length >= 2) {
-        result[1] = offset[1] === "string" ? `-${offset[1]}` : -offset[1];
+        result[1] = typeof offset[1] === "string" ? reversePercentage(offset[1]) : -offset[1];
     }
 
     return result;
@@ -146,7 +159,7 @@ export function clacOverFlowSize(point: Point, sourceRegion: Region): Round {
     const [documentWidth, documentHeight] = getDocumentSize();
     const left = point.x < 0 ? Math.abs(point.x) : 0;
     const right = point.x + sourceRegion.width > documentWidth ? point.x + sourceRegion.width - documentWidth : 0;
-    const top = point.y < 0 ? Math.abs(point.x) : 0;
+    const top = point.y < 0 ? Math.abs(point.y) : 0;
     const bottom = point.y + sourceRegion.height > documentHeight ? point.y + sourceRegion.height - documentHeight : 0;
 
     return { left, right, top, bottom };
@@ -172,12 +185,12 @@ export function adjustPoint(point: Point, sourceRegion: Region): RevisePoint {
         point.y = 0;
         adjustY = true;
     }
-    if (overflow.right > 0 && point.x - overflow.right >= 0) {
-        point.x -= overflow.right;
+    if (overflow.right > 0 && documentWidth >= sourceRegion.width) {
+        point.x = documentWidth - sourceRegion.width;
         adjustX = true;
     }
-    if (overflow.bottom > 0 && point.y - overflow.bottom >= 0) {
-        point.y -= overflow.bottom;
+    if (overflow.bottom > 0 && documentHeight >= sourceRegion.height) {
+        point.y = documentHeight - sourceRegion.height;
         adjustY = true;
     }
 
@@ -208,23 +221,23 @@ export function flipPoint(point: Point, sourceRegion: Region, targetRegion: Regi
     let adjustX = false;
     let adjustY = false;
 
-    if (overflow.left > 0 && targetRight + sourceRegion.width < documentWidth) {
+    if (overflow.left > 0 && targetRight + sourceRegion.width <= documentWidth) {
         // 反转到  targetRegion 右边
         point.x = targetRight;
         adjustX = true;
     }
 
-    if (overflow.right > 0 && targetRegion.left - sourceRegion.width > 0) {
+    if (overflow.right > 0 && targetRegion.left - sourceRegion.width >= 0) {
         point.x = targetRegion.left - sourceRegion.width;
         adjustX = true;
     }
 
-    if (overflow.top > 0 && targetBottom + sourceRegion.height < documentHeight) {
+    if (overflow.top > 0 && targetBottom + sourceRegion.height <= documentHeight) {
         point.y = targetBottom;
         adjustY = true;
     }
 
-    if (overflow.bottom > 0 && targetRegion.top - sourceRegion.height > 0) {
+    if (overflow.bottom > 0 && targetRegion.top - sourceRegion.height >= 0) {
         point.y = targetRegion.top - sourceRegion.height;
         adjustY = true;
     }
@@ -240,8 +253,11 @@ export function flipPoint(point: Point, sourceRegion: Region, targetRegion: Regi
  * @param overflow
  */
 export function resizeSource(point: Point, sourceRegion: Region) {
+    const [documentWidth, documentHeight] = getDocumentSize();
     const overflow: Round = clacOverFlowSize(point, sourceRegion);
     const region: Region = { top: point.y, left: point.x, height: null, width: null };
+
+    // TODO：#1 严重BUG， 当 sourceRegion, 大于文档尺寸时候, overflow.left溢出计算了width宽度, overflow.right也溢出，又设置了一次宽度
 
     if (overflow.left > 0) {
         region.left = 0;
@@ -259,6 +275,14 @@ export function resizeSource(point: Point, sourceRegion: Region) {
 
     if (overflow.bottom > 0) {
         region.height = sourceRegion.height - overflow.bottom;
+    }
+
+    if (sourceRegion.width > documentWidth) {
+        region.width = documentWidth;
+    }
+
+    if (sourceRegion.height > documentHeight) {
+        region.height = documentHeight;
     }
 
     return region;
