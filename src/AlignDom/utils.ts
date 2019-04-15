@@ -177,19 +177,21 @@ export function adjustPoint(point: Point, sourceRegion: Region): RevisePoint {
     let adjustX = false;
     let adjustY = false;
 
-    if (overflow.left > 0 && sourceRegion.width <= documentWidth) {
+    // Tips: 溢出小于 target 尺寸的一半才微调, 否则忽略交由后续去反转
+
+    if (overflow.left > 0 && overflow.left <= sourceRegion.width / 2 && sourceRegion.width <= documentWidth) {
         point.x = 0;
         adjustX = true;
     }
-    if (overflow.top > 0 && sourceRegion.height <= documentHeight) {
+    if (overflow.top > 0 && overflow.top <= sourceRegion.height / 2 && sourceRegion.height <= documentHeight) {
         point.y = 0;
         adjustY = true;
     }
-    if (overflow.right > 0 && documentWidth >= sourceRegion.width) {
+    if (overflow.right > 0 && overflow.right <= sourceRegion.width / 2 && documentWidth >= sourceRegion.width) {
         point.x = documentWidth - sourceRegion.width;
         adjustX = true;
     }
-    if (overflow.bottom > 0 && documentHeight >= sourceRegion.height) {
+    if (overflow.bottom > 0 && overflow.bottom <= sourceRegion.height / 2 && overflow.right <= sourceRegion.width / 2 && documentHeight >= sourceRegion.height) {
         point.y = documentHeight - sourceRegion.height;
         adjustY = true;
     }
