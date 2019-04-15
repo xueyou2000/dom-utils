@@ -206,7 +206,7 @@ describe("AlignDom - adjustPoint", () => {
     });
 
     test("adjust right", () => {
-        const point: Point = { x: 490, y: 10 };
+        const point: Point = { x: 420, y: 10 };
         const region: Region = { left: 0, top: 0, width: 100, height: 120 };
 
         const result = adjustPoint(point, region);
@@ -216,7 +216,7 @@ describe("AlignDom - adjustPoint", () => {
     });
 
     test("adjust bottom", () => {
-        const point: Point = { x: 10, y: 590 };
+        const point: Point = { x: 10, y: 520 };
         const region: Region = { left: 0, top: 0, width: 100, height: 120 };
 
         const result = adjustPoint(point, region);
