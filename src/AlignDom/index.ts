@@ -12,7 +12,7 @@ export function alignElement(sourceNode: HTMLElement, targetNode: HTMLElement | 
 
     const sourceRegion = getRegion(sourceNode);
     const targetRegion = getRegion(targetNode, true);
-    const region = alignRegion(sourceRegion, targetRegion, option);
+    const [region, flipRevise] = alignRegion(sourceRegion, targetRegion, option);
 
     sourceNode.style.position = "absolute";
     sourceNode.style.left = `${region.left}px`;
@@ -24,6 +24,8 @@ export function alignElement(sourceNode: HTMLElement, targetNode: HTMLElement | 
         sourceNode.style.height = `${region.height}px`;
     }
     sourceNode.style.display = null;
+
+    return flipRevise;
 }
 
 /**
@@ -32,7 +34,7 @@ export function alignElement(sourceNode: HTMLElement, targetNode: HTMLElement | 
  * @param targetRegion
  * @param option
  */
-export function alignRegion(sourceRegion: Region, targetRegion: Region, option: DomAlignOption) {
+export function alignRegion(sourceRegion: Region, targetRegion: Region, option: DomAlignOption): [Region, RevisePoint] {
     const { points } = option;
     const sourcePoint = calcPoint({ left: 0, top: 0, width: sourceRegion.width, height: sourceRegion.height }, points[0]);
     const targetPoint = calcPoint(targetRegion, points[1]);
@@ -73,12 +75,11 @@ export function alignRegion(sourceRegion: Region, targetRegion: Region, option: 
     // 微调
     if (option.overflow.adjust) {
         const needAccOffset = adjustPoint(finallyPoint, sourceRegion);
-        flipRevise = accRevisePoint(flipRevise, needAccOffset);
         // 累加偏移量(微调或反转后，需要重新累加偏移量)
         finallyPoint = accOffset(finallyPoint, needAccOffset);
     }
 
     const region = resizeSource(finallyPoint, sourceRegion);
 
-    return region;
+    return [region, flipRevise];
 }

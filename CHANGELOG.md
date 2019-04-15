@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.54 (Mon Apr 15 2019)
+
+-   重构`AlignDom`对齐函数， 并增加测试
+
 ## 0.0.53 (Fri Apr 05 2019)
 
 -   增加`CreateNnavigateHandle`
