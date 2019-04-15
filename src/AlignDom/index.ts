@@ -68,14 +68,14 @@ export function alignRegion(sourceRegion: Region, targetRegion: Region, option: 
     let flipRevise: RevisePoint = { x: false, y: false };
 
     // 微调
-    if (option.overflow.adjust) {
+    if (option.overflow && option.overflow.adjust) {
         const needAccOffset = adjustPoint(finallyPoint, sourceRegion);
         // 累加偏移量(微调或反转后，需要重新累加偏移量)
         finallyPoint = accOffset(finallyPoint, needAccOffset);
     }
 
     // 反转
-    if (option.overflow.flip) {
+    if (option.overflow && option.overflow.flip) {
         flipRevise = flipPoint(finallyPoint, sourceRegion, targetRegion);
         // 累加偏移量(微调或反转后，需要重新累加偏移量)
         finallyPoint = accOffset(finallyPoint, flipRevise, true);

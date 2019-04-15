@@ -5,11 +5,11 @@ export interface OverFlow {
     /**
      * 微调
      */
-    adjust: boolean;
+    adjust?: boolean;
     /**
      * 反转
      */
-    flip: boolean;
+    flip?: boolean;
 }
 
 /**
