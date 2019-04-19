@@ -30,12 +30,14 @@ export function CreateNnavigateHandle(config: NnavigateConfig) {
                 if (config.onPrev) {
                     config.onPrev();
                 }
+                e.preventDefault();
                 break;
             // 下方向
             case 40:
                 if (config.onNext) {
                     config.onNext();
                 }
+                e.preventDefault();
                 break;
             // 取消
             case 27:
