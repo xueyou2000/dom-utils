@@ -155,8 +155,8 @@ export function accRevisePoint(p1: RevisePoint, p2: RevisePoint) {
  * @param sourceRegion
  * @param targetRegion
  */
-export function clacOverFlowSize(point: Point, sourceRegion: Region): Round {
-    const [documentWidth, documentHeight] = getDocumentSize();
+export function clacOverFlowSize(point: Point, sourceRegion: Region, contaninScroll: boolean = false): Round {
+    const [documentWidth, documentHeight] = getDocumentSize(contaninScroll);
     const left = point.x < 0 ? Math.abs(point.x) : 0;
     const right = point.x + sourceRegion.width > documentWidth ? point.x + sourceRegion.width - documentWidth : 0;
     const top = point.y < 0 ? Math.abs(point.y) : 0;
@@ -171,9 +171,9 @@ export function clacOverFlowSize(point: Point, sourceRegion: Region): Round {
  * @param point
  * @param overflow
  */
-export function adjustPoint(point: Point, sourceRegion: Region): RevisePoint {
-    const [documentWidth, documentHeight] = getDocumentSize();
-    const overflow: Round = clacOverFlowSize(point, sourceRegion);
+export function adjustPoint(point: Point, sourceRegion: Region, contaninScroll: boolean = false): RevisePoint {
+    const [documentWidth, documentHeight] = getDocumentSize(contaninScroll);
+    const overflow: Round = clacOverFlowSize(point, sourceRegion, contaninScroll);
     let adjustX = false;
     let adjustY = false;
 
@@ -215,9 +215,9 @@ export function adjustPoint(point: Point, sourceRegion: Region): RevisePoint {
  * @param sourceRegion
  * @param overflow
  */
-export function flipPoint(point: Point, sourceRegion: Region, targetRegion: Region): RevisePoint {
+export function flipPoint(point: Point, sourceRegion: Region, targetRegion: Region, contaninScroll: boolean = false): RevisePoint {
     const overflow: Round = clacOverFlowSize(point, sourceRegion);
-    const [documentWidth, documentHeight] = getDocumentSize();
+    const [documentWidth, documentHeight] = getDocumentSize(contaninScroll);
     const targetRight = targetRegion.left + targetRegion.width;
     const targetBottom = targetRegion.top + targetRegion.height;
     let adjustX = false;
@@ -254,8 +254,8 @@ export function flipPoint(point: Point, sourceRegion: Region, targetRegion: Regi
  * @param targetRegion
  * @param overflow
  */
-export function resizeSource(point: Point, sourceRegion: Region) {
-    const [documentWidth, documentHeight] = getDocumentSize();
+export function resizeSource(point: Point, sourceRegion: Region, contaninScroll: boolean = false) {
+    const [documentWidth, documentHeight] = getDocumentSize(contaninScroll);
     const overflow: Round = clacOverFlowSize(point, sourceRegion);
     const region: Region = { top: point.y, left: point.x, height: null, width: null };
 

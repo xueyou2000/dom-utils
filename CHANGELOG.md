@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.58 (Fri May 10 2019)
+
+-   `AlignDom`增加`contaninScroll`参数, 控制视窗尺寸判断还是内容尺寸判断
+
 ## 0.0.57 (Fri Apr 19 2019)
 
 -   `Navigate`上下方向键阻止跳转光标

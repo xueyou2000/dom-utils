@@ -19,9 +19,9 @@ export function getDocument(node: HTMLElement | Window) {
  * 获取视窗大小
  * @returns [viewportWidth, viewportHeight]
  */
-export function getViewportSize(): number[] {
+export function getViewportSize(contaninScroll: boolean = false): number[] {
     return ["Width", "Height"].map((field) => {
-        var prop = `client${field}`;
+        var prop = `${contaninScroll ? "offset" : "client"}${field}`;
         var doc = window.document;
         var body = doc.body;
         var documentElement = doc.documentElement;
@@ -35,8 +35,8 @@ export function getViewportSize(): number[] {
 /**
  * 获取文档大小
  */
-export function getDocumentSize(): number[] {
-    let [viewportWidth, viewportHeight] = getViewportSize();
+export function getDocumentSize(contaninScroll: boolean = false): number[] {
+    let [viewportWidth, viewportHeight] = getViewportSize(contaninScroll);
     return [viewportWidth + window.pageXOffset, viewportHeight + window.pageYOffset];
 }
 

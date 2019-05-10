@@ -74,4 +74,9 @@ export interface DomAlignOption {
      * @description 如果adjustX字段为true，那么如果源节点不可见，则将在x方向上调整源节点。 如果adjustY字段为true，则如果源节点不可见，则将在y方向上调整源节点。
      */
     overflow?: OverFlow;
+    /**
+     * 是否包含滚动条检测
+     * @description 默认不包含， 元素不在视窗内就翻转
+     */
+    contaninScroll?: boolean;
 }
