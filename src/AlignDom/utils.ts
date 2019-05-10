@@ -174,11 +174,11 @@ export function clacOverFlowSize(point: Point, sourceRegion: Region, contaninScr
 export function adjustPoint(point: Point, sourceRegion: Region, contaninScroll: boolean = false): RevisePoint {
     const [documentWidth, documentHeight] = getDocumentSize(contaninScroll);
     const overflow: Round = clacOverFlowSize(point, sourceRegion, contaninScroll);
+
     let adjustX = false;
     let adjustY = false;
 
     // Tips: 溢出小于 target 尺寸的一半才微调, 否则忽略交由后续去反转
-
     if (overflow.left > 0 && overflow.left <= sourceRegion.width / 2 && sourceRegion.width <= documentWidth) {
         point.x = 0;
         adjustX = true;
@@ -223,23 +223,37 @@ export function flipPoint(point: Point, sourceRegion: Region, targetRegion: Regi
     let adjustX = false;
     let adjustY = false;
 
-    if (overflow.left > 0 && targetRight + sourceRegion.width <= documentWidth) {
+    const leftViewSpace = targetRegion.left - window.pageXOffset;
+    const rightViewSpace = documentWidth - targetRegion.left - targetRegion.width;
+    const topViewSpace = targetRegion.top - window.pageYOffset;
+    const bottomtViewSpace = documentHeight - targetRegion.top - targetRegion.height;
+
+    // 当前所在方向比对边多可视空间，才允许反转
+    // console.log("元素可视区域上部分", targetRegion.top - window.pageYOffset);
+    // console.log("元素可视区域下部分", documentHeight - targetRegion.top - targetRegion.height);
+    // console.log("元素可视区域左部分", targetRegion.left - window.pageXOffset);
+    // console.log("元素可视区域右部分", documentWidth - targetRegion.left - targetRegion.width);
+
+    if (overflow.left > 0 && rightViewSpace > leftViewSpace && targetRight + sourceRegion.width <= documentWidth) {
         // 反转到  targetRegion 右边
         point.x = targetRight;
         adjustX = true;
     }
 
-    if (overflow.right > 0 && targetRegion.left - sourceRegion.width >= 0) {
+    if (overflow.right > 0 && leftViewSpace > rightViewSpace && targetRegion.left - sourceRegion.width >= 0) {
+        // 反转到  targetRegion 左边
         point.x = targetRegion.left - sourceRegion.width;
         adjustX = true;
     }
 
-    if (overflow.top > 0 && targetBottom + sourceRegion.height <= documentHeight) {
+    if (overflow.top > 0 && bottomtViewSpace > topViewSpace && targetBottom + sourceRegion.height <= documentHeight) {
+        // 反转到  targetRegion 下边
         point.y = targetBottom;
         adjustY = true;
     }
 
-    if (overflow.bottom > 0 && targetRegion.top - sourceRegion.height >= 0) {
+    if (overflow.bottom > 0 && topViewSpace > bottomtViewSpace && targetRegion.top - sourceRegion.height >= 0) {
+        // 反转到  targetRegion 上边
         point.y = targetRegion.top - sourceRegion.height;
         adjustY = true;
     }

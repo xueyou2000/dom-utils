@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.60 (Fri May 10 2019)
+
+-   修复`AlignDom`反转逻辑，往可视区域更多的地方反转
+
 ## 0.0.58 (Fri May 10 2019)
 
 -   `AlignDom`增加`contaninScroll`参数, 控制视窗尺寸判断还是内容尺寸判断

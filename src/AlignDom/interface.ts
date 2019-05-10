@@ -58,7 +58,7 @@ export interface DomAlignOption {
     /**
      * 移动源节点与目标节点对齐，如['tr'，'cc']，将源节点的右上角与目标节点的中心点对齐。 点可以是't'（顶部），'b'（底部），'c'（中心），'l'（左），'r'（右）
      */
-    points: [PointSuite, PointSuite];
+    points?: [PointSuite, PointSuite];
     /**
      * 偏移量
      * @example [10, 20],  ['5%', '50%']
