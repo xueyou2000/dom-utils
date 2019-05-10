@@ -9,6 +9,7 @@ import { accPoint, accRevisePoint, adjustPoint, calcOffset, calcPoint, flipOffse
  */
 export function alignElement(sourceNode: HTMLElement, targetNode: HTMLElement | AlignPointType, option: DomAlignOption) {
     sourceNode.style.display = "block";
+    sourceNode.style.animation = "none";
 
     const sourceRegion = getRegion(sourceNode);
     const targetRegion = getRegion(targetNode, true);
@@ -23,6 +24,7 @@ export function alignElement(sourceNode: HTMLElement, targetNode: HTMLElement | 
     if (region.height) {
         sourceNode.style.height = `${region.height}px`;
     }
+    sourceNode.style.animation = null;
     sourceNode.style.display = null;
 
     return flipRevise;
