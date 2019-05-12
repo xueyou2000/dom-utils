@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.64 (Sat May 11 2019)
+
+-   `CreateNnavigateHandle`阻止冒泡
+
 ## 0.0.63 (Sat May 11 2019)
 
 -   `alignElement`修改签名， 增加`restAnimation`参数，控制是否重置动画

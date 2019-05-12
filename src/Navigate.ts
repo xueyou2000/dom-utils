@@ -46,6 +46,9 @@ export function CreateNnavigateHandle(config: NnavigateConfig) {
                 }
                 break;
         }
+
+        e.stopPropagation();
+        e.preventDefault();
     }
 
     return handleKeyDown;
