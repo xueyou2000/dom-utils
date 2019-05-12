@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.63 (Sat May 11 2019)
+
+-   `alignElement`修改签名， 增加`restAnimation`参数，控制是否重置动画
+
 ## 0.0.62 (Sat May 11 2019)
 
 -   修复编译的.d.ts 问题
