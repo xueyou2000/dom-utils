@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.65 (Sat May 11 2019)
+
+-   `CreateNnavigateHandle`再次修复，并传递事件参数
+
 ## 0.0.64 (Sat May 11 2019)
 
 -   `CreateNnavigateHandle`阻止冒泡

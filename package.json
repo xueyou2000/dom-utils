@@ -1,6 +1,6 @@
 {
     "name": "utils-dom",
-    "version": "0.0.64",
+    "version": "0.0.65",
     "description": "dom常用工具函数",
     "typings": "es/index.d.ts",
     "main": "es/index.js",
