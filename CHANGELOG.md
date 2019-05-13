@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.66 (Mon May 13 2019)
+
+-   `CreateNnavigateHandle`防止空格阻止默认操作
+
 ## 0.0.65 (Sat May 11 2019)
 
 -   `CreateNnavigateHandle`再次修复，并传递事件参数

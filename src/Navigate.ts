@@ -26,7 +26,7 @@ export function CreateNnavigateHandle(config: NnavigateConfig) {
                 if (config.onShow) {
                     config.onShow(e);
                 }
-                e.preventDefault();
+                e.stopPropagation();
                 break;
             // 上方向
             case 38:
