@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.70 (Thu May 30 2019)
+
+-   增加`date`相关工具函数
+
 ## 0.0.66 (Mon May 13 2019)
 
 -   `CreateNnavigateHandle`防止空格阻止默认操作
