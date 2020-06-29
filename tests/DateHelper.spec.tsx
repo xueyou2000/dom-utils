@@ -1,4 +1,4 @@
-import { isShortTime, shortTimeParse, shrotTimeTimestamp, formatDate, isTime, timeParse } from "../src";
+import { isShortTime, shortTimeParse, shrotTimeTimestamp, formatDate, isTime, timeParse, incrementDate, decreaseDate } from "../src";
 
 describe("short-time", () => {
     test("isShortTime", () => {
@@ -63,5 +63,17 @@ describe("date", () => {
     test("formatDate", () => {
         let date = new Date(2019, 9, 19, 13, 30, 0);
         expect(formatDate(date)).toBe("2019-10-19 13:30:00");
+    });
+
+    test("incrementDate", () => {
+        let date = new Date(2020, 5, 30, 0, 0, 0);
+        expect(formatDate(incrementDate(date))).toBe("2020-07-01 00:00:00");
+        expect(formatDate(incrementDate(new Date(2020, 5, 24, 0, 0, 0)))).toBe("2020-06-25 00:00:00");
+    });
+
+    test("decreaseDate", () => {
+        let date = new Date(2020, 5, 1, 0, 0, 0);
+        expect(formatDate(decreaseDate(date))).toBe("2020-05-31 00:00:00");
+        expect(formatDate(decreaseDate(new Date(2020, 5, 24, 0, 0, 0)))).toBe("2020-06-23 00:00:00");
     });
 });

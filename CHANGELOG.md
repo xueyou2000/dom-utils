@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.71 (Mon Jun 29 2020)
+
+-   增加`incrementDate`, `decreaseDate`方法增加/减少天数
+
 ## 0.0.70 (Thu May 30 2019)
 
 -   增加`date`相关工具函数

@@ -1,4 +1,5 @@
 import { isTime, timeParse } from "./time";
+import { daysInMonth } from "./calendar";
 
 /**
  * 格式化日期字符串
@@ -7,7 +8,7 @@ import { isTime, timeParse } from "./time";
  * @example formatDate(new Date(), 'yyyy-MM-dd HH:mm:ss');
  */
 export function formatDate(t: Date, format = "yyyy-MM-dd HH:mm:ss") {
-    const tf = function(i: number) {
+    const tf = function (i: number) {
         return (i < 10 ? "0" : "") + i;
     };
     return format.replace(/yyyy|MM|dd|HH|mm|ss/g, (token) => {
@@ -302,6 +303,45 @@ export function setDate(d: Date, day: number) {
     const date = new Date(d);
     date.setDate(day);
     return date;
+}
+
+/**
+ * 累加日, 返回新日期
+ * @param d
+ */
+export function incrementDate(d: Date) {
+    const date = new Date(d);
+    const day = date.getDate();
+    let prevDate: Date;
+
+    if (day >= daysInMonth(date)) {
+        // 往后翻一月
+        prevDate = setMonth(date, date.getMonth() + 1);
+        prevDate.setDate(1);
+    } else {
+        prevDate = setDate(date, day + 1);
+    }
+    return prevDate;
+}
+
+/**
+ * 累减日, 返回新日期
+ * @param d
+ */
+export function decreaseDate(d: Date) {
+    const date = new Date(d);
+    const day = date.getDate();
+    let prevDate: Date;
+    switch (day) {
+        case 1:
+            // 往前翻一月
+            prevDate = setMonth(date, date.getMonth() - 1);
+            prevDate.setDate(daysInMonth(prevDate));
+            break;
+        default:
+            prevDate = setDate(date, day - 1);
+    }
+    return prevDate;
 }
 
 /**
